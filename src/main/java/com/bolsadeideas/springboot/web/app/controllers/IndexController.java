@@ -3,6 +3,7 @@ package com.bolsadeideas.springboot.web.app.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +17,20 @@ import com.bolsadeideas.springboot.web.app.models.Usuario;
 @Controller
 @RequestMapping("/app")
 public class IndexController {
+	
+	
+	
+	@Value("${texto.indexcontroller.index.titulo}")
+	private String textoIndex;
+	@Value("${texto.indexcontroller.perfil.titulo}")
+	private String textoPerfil;
+	@Value("${texto.indexcontroller.listar.titulo}")
+	private String textoListar;
 
 	@RequestMapping({"/index","/","","/home"})
 	public String index(Model model) {
 		
-		model.addAttribute("titulo", "Hola spring Framework");
+		model.addAttribute("titulo", textoIndex);
 		return "index";
 	}
 	
@@ -30,7 +40,7 @@ public class IndexController {
 		usu.setNombre("Nelson");
 		usu.setApellido("Gomez");
 		usu.setEmail("n00gomez00@gmail.com");
-		model.addAttribute("titulo", "Perfil del usuario "+usu.getNombre());
+		model.addAttribute("titulo", textoPerfil+usu.getNombre());
 		model.addAttribute("usuario", usu);
 		return "perfil";
 	}
@@ -38,7 +48,7 @@ public class IndexController {
 	@GetMapping("/listar")
 	public String listar(Model model) {
 		
-		model.addAttribute("titulo", "Lista de Usuarios ");
+		model.addAttribute("titulo", textoListar);
 		
 		return "listar";
 	}
